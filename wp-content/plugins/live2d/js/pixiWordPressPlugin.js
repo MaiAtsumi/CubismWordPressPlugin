@@ -61,11 +61,17 @@ PIXI.loader.load(function (loader, resources) {
 		model.update(deltaTime);
 		model.masks.update(app.renderer);
 	});
-	documentElement = (navigator.userAgent.toLowerCase().match(/webkit/)) ? document.body : document.documentElement;
+
+	function bodyOrHtml(){
+		if('scrollingElement' in document){ return document.scrollingElement; }
+		if(navigator.userAgent.indexOf('WebKit') != -1){ return document.body; }
+		return document.documentElement;
+	}
+	var scrollElm = bodyOrHtml();
 	document.body.addEventListener("mousemove", function(e){
 		//マウスカーソル位置を更新
-		mouse_x = e.pageX - documentElement.scrollLeft;
-		mouse_y = e.pageY - documentElement.scrollTop;
+		mouse_x = e.pageX - scrollElm.scrollLeft;
+		mouse_y = e.pageY - scrollElm.scrollTop;
 	});
 	document.body.addEventListener("click", function(e){
 		//クリックされたらランダムでモーション再生
