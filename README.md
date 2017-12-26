@@ -77,31 +77,31 @@ WordPress のブログ上に Live2D モデルを表示することができま�
 ## ライセンス
 live2d.php は GNU General Public License, version 2 で提供しています。
 - [GNU General Public License, version 2](https://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- - live2d.php
+   - live2d.php
 
 
 Live2D Cubism Core は Live2D Proprietary Software License で提供しています。
  - Live2D Proprietary Software License 
 [日本語](http://www.live2d.com/eula/live2d-proprietary-software-license-agreement_jp.html) 
 [English](http://www.live2d.com/eula/live2d-proprietary-software-license-agreement_en.html) 
- - live2dcubismcore.min.js
+   - live2dcubismcore.min.js
 
 
 Live2D Cubism Components は Live2D Open Software License で提供しています。
 - Live2D Open Software License 
 [日本語](http://www.live2d.com/eula/live2d-open-software-license-agreement_jp.html) 
 [English](http://www.live2d.com/eula/live2d-open-software-license-agreement_en.html) 
- - live2dcubismframework.js
- - live2dcubismpixi.js
- - pixiWordPressPlugin.js
+   - live2dcubismframework.js
+   - live2dcubismpixi.js
+   - pixiWordPressPlugin.js
 
 
 サンプルモデルは Free Material License で提供しています。
 - Free Material License 
 [日本語](http://www.live2d.com/eula/live2d-free-material-license-agreement_jp.html) 
 [English](http://www.live2d.com/eula/live2d-free-material-license-agreement_en.html) 
- - assets/Koharu/*
- - assets/Hiyori/*
+   - assets/Koharu/*
+   - assets/Hiyori/*
 
 
 
