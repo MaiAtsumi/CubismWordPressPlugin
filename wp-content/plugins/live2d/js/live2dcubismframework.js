@@ -178,7 +178,9 @@ var LIVE2DCUBISMFRAMEWORK;
                 }
             }
             this.parameterTracks.forEach(function (t) {
-                if(t.targetId == "PARAM_ANGLE_X" || t.targetId == "PARAM_ANGLE_Y" || t.targetId == "PARAM_EYE_BALL_X" || t.targetId == "PARAM_EYE_BALL_Y"){ return; }
+                if(t.targetId == "PARAM_ANGLE_X" || t.targetId == "PARAM_ANGLE_Y" || t.targetId == "PARAM_EYE_BALL_X" || t.targetId == "PARAM_EYE_BALL_Y" || 
+                    t.targetId == "ParamAngleX" || t.targetId == "ParamAngleY" || t.targetId == "ParamEyeBallX" || t.targetId == "ParamEyeBallY"){ return; }
+
                 var p = target.parameters.ids.indexOf(t.targetId);
                 if (p >= 0) {
                     var sample = t.evaluate(time);

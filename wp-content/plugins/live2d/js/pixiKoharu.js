@@ -37,10 +37,14 @@ PIXI.loader.load(function (loader, resources) {
 	var rect = canvas.getBoundingClientRect();
 	var center_x = pos_x + rect.left, center_y = pos_y + rect.top;
 	var mouse_x = center_x, mouse_y = center_y;
-	var angle_x = model.parameters.ids.indexOf("PARAM_ANGLE_X");
-	var angle_y = model.parameters.ids.indexOf("PARAM_ANGLE_Y");
-	var eye_x = model.parameters.ids.indexOf("PARAM_EYE_BALL_X");
-	var eye_y = model.parameters.ids.indexOf("PARAM_EYE_BALL_Y");
+	var angle_x = model.parameters.ids.indexOf("ParamAngleX");
+	if(angle_x < 0){ angle_x = model.parameters.ids.indexOf("PARAM_ANGLE_X"); }
+	var angle_y = model.parameters.ids.indexOf("ParamAngleY");
+	if(angle_y < 0){ angle_y = model.parameters.ids.indexOf("PARAM_ANGLE_Y"); }
+	var eye_x = model.parameters.ids.indexOf("ParamEyeBallX");
+	if(eye_x < 0){ eye_x = model.parameters.ids.indexOf("PARAM_EYE_BALL_X"); }
+	var eye_y = model.parameters.ids.indexOf("ParamEyeBallY");
+	if(eye_y < 0){ eye_y = model.parameters.ids.indexOf("PARAM_EYE_BALL_Y"); }
 	app.ticker.add(function (deltaTime) {
 		//顔と目のパラメータをマウスカーソルの方向で上書き
 		//※フレームワーク内では該当パラメータを更新しないよう修正している
