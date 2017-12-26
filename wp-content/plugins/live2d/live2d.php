@@ -59,7 +59,7 @@ class Live2D{
 			$plugin_url = plugin_dir_url( __FILE__ );
 			wp_enqueue_script('live2dcubismframework', $plugin_url . 'js/live2dcubismframework.js', '', '1.0', false);
 			wp_enqueue_script('live2dcubismpixi', $plugin_url . 'js/live2dcubismpixi.js', '', '1.0', false);
-			wp_enqueue_script('pixiKoharu', $plugin_url . 'js/pixiKoharu.js', '', '1.0', false);
+			wp_enqueue_script('pixiWordPressPlugin', $plugin_url . 'js/pixiWordPressPlugin.js', '', '1.0', false);
 		}
 		add_action('admin_menu', array($this, 'add_pages'));
 
