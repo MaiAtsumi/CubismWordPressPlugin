@@ -79,7 +79,6 @@ live2d.php は GNU General Public License, version 2 で提供しています。
 - [GNU General Public License, version 2](https://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
    - live2d.php
 
-
 Live2D Cubism Core は Live2D Proprietary Software License で提供しています。
  - Live2D Proprietary Software License 
 [日本語](http://www.live2d.com/eula/live2d-proprietary-software-license-agreement_jp.html) 
@@ -102,6 +101,12 @@ Live2D Cubism Components は Live2D Open Software License で提供していま�
 [English](http://www.live2d.com/eula/live2d-free-material-license-agreement_en.html) 
    - assets/Koharu/*
    - assets/Hiyori/*
+
+直近会計年度の売上高が 1000 万円以上の事業者様がご利用になる場合は、SDKリリース(出版許諾)ライセンスに同意していただく必要がございます。 
+- [SDKリリース(出版許諾)ライセンス](http://www.live2d.com/ja/products/releaselicense) 
+
+*All business* users must obtain a Publication License. "Business" means an entity  with the annual gross revenue more than ten million (10,000,000) JPY for the most recent fiscal year.
+- [SDK Release (Publication) License](http://www.live2d.com/en/products/releaselicense) 
 
 
 
