@@ -27,8 +27,71 @@
  Please see LICENSE.txt for the full license.
 
 */
+
+function live2d_activate_activation(){ add_option('Live2DActivateConfirm', 'confirm'); }
+if(function_exists('register_activation_hook')){ register_activation_hook(__FILE__, 'live2d_activate_activation'); }
+
+function live2d_activate_deactivation(){ delete_option('Live2DActivateConfirm'); }
+if(function_exists('register_deactivation_hook')){ register_deactivation_hook(__FILE__, 'live2d_activate_deactivation'); }
+if(function_exists('register_uninstall_hook')){ register_uninstall_hook(__FILE__, 'live2d_activate_deactivation'); }
+
+function live2d_activate_confirm(){
+	if(is_admin()){
+
+		$state = get_option('Live2DActivateConfirm');
+		if($state == 'confirm'){
+
+			$confirm = $_POST["live2d_activate_confirm"];
+			if($confirm == 'accept'){
+				update_option('Live2DActivateConfirm', 'accepted');
+				if(isset($_GET['activate'])){ unset($_GET['activate']); }
+				header("Location: " . $_SERVER['PHP_SELF']);
+
+			}else if($confirm == 'reject'){
+				delete_option('Live2DActivateConfirm');
+				deactivate_plugins(plugin_basename(__FILE__));
+				if(isset($_GET['activate'])){ unset($_GET['activate']); }
+				header("Location: " . $_SERVER['PHP_SELF']);
+
+			}else{
+?>
+	<div id="layer" style="z-index: 1000; position: fixed; top: 0; left: 0; display:block; width: 100%; height: 100%; opacity: 0.6; background-color: #000000;"></div>
+	<div id="box" style="z-index: 1001; position: fixed; top: 10%; left: 15%; display: block; width: 70%; background-color: #ffffff; textAlign: center;">
+		<div style="margin:10px;">
+			<div style="font-size: 24px; line-height: 1.8em; font-weight: bold; text-align: center;">Cubism Core License</div>
+		</div>
+		<iframe class="license-frame" src="http://www.live2d.com/eula/live2d-proprietary-software-license-agreement_en.html" style="width: 100%; height: 500px; border-style: none; background-color: #f8f8f8;"></iframe><br />
+		<div style="margin:20px 10px; overflow: hidden;">
+			<div style="float:left; width: 50%; font-size: 30px; line-height: 1.8em; text-align: center; font-weight: bold;">
+				<form name="live2d_activate_accept" method="POST" action="#" >
+					<a href="javascript:document.live2d_activate_accept.submit()">承諾(Accept)</a>
+					<input type="hidden" name="live2d_activate_confirm" value="accept">
+				</form>
+			</div>
+			<div style="float:left; width: 50%; font-size: 30px; line-height: 1.8em; text-align: center;">
+				<form name="live2d_activate_reject" method="POST" action="#" >
+					<a href="javascript:document.live2d_activate_reject.submit()">拒否(Reject)</a>
+					<input type="hidden" name="live2d_activate_confirm" value="reject">
+				</form>
+			</div>
+		</div>
+	</div>
+<?php
+			}
+
+		}else if($state == 'accepted'){
+			//nothing
+		}
+	}
+}
+add_action('admin_init', 'live2d_activate_confirm');
+
 class Live2D{
 	function __construct(){
+		$state = get_option('Live2DActivateConfirm');
+		//SDKリリースライセンスに同意していないなら終了
+		if($state != 'accepted'){ return; }
+
 		//Init path
 		$opt = get_option('live2d_options');
 		if(!$opt){
@@ -49,7 +112,7 @@ class Live2D{
 		}
 
 		//Load javascript
-		if(!strstr($_SERVER["REQUEST_URI"], 'wp-admin')){
+		if(!is_admin()){
 			wp_enqueue_script('pixi', 'https://cdnjs.cloudflare.com/ajax/libs/pixi.js/4.6.1/pixi.min.js', '', '1.0', false);
 
 			//By including below library in your project you agree to http://live2d.com/eula/live2d-proprietary-software-license-agreement_en.html
@@ -60,8 +123,10 @@ class Live2D{
 			wp_enqueue_script('live2dcubismframework', $plugin_url . 'js/live2dcubismframework.js', '', '1.0', false);
 			wp_enqueue_script('live2dcubismpixi', $plugin_url . 'js/live2dcubismpixi.js', '', '1.0', false);
 			wp_enqueue_script('pixiWordPressPlugin', $plugin_url . 'js/pixiWordPressPlugin.js', '', '1.0', false);
+
+		}else{
+			add_action('admin_menu', array($this, 'add_pages'));
 		}
-		add_action('admin_menu', array($this, 'add_pages'));
 
 		//Set options
 		$opt = get_option('live2d_options');
@@ -84,6 +149,7 @@ class Live2D{
 		print("var scale = " . ((isset($opt['scale']) && !empty($opt['scale'])) ? $opt['scale'] : "100") . ";\n"); 
 		print("</script>");
 	}
+
 	function add_pages(){
 		add_menu_page('Live2D Settings', 'Live2D Settings', 'level_8', __FILE__, array($this, 'option_page'), '', 26);
 	}
