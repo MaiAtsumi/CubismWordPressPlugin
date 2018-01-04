@@ -120,34 +120,32 @@ class Live2D{
 			wp_enqueue_script('live2dcubismcore', 'https://s3-ap-northeast-1.amazonaws.com/cubism3.live2d.com/sdk/js_eap/live2dcubismcore.min.js', '', '1.0', false);
 
 			$plugin_url = plugin_dir_url( __FILE__ );
+			$plugin_path = plugin_dir_path(__FILE__);
 			wp_enqueue_script('live2dcubismframework', $plugin_url . 'js/live2dcubismframework.js', '', '1.0', false);
 			wp_enqueue_script('live2dcubismpixi', $plugin_url . 'js/live2dcubismpixi.js', '', '1.0', false);
+
+			//Set options
+			$opt = get_option('live2d_options');
+			$data = "var theme_path = '" . $plugin_url . "';\n";
+			if(isset($opt['moc_path']) && !empty($opt['moc_path']) && file_exists($plugin_path . $opt['moc_path'])){ $data .= "var moc_path = '" . $opt['moc_path'] . "';\n"; }
+			if(isset($opt['tex1_path']) && !empty($opt['tex1_path']) && file_exists($plugin_path . $opt['tex1_path'])){ $data .= "var tex1_path = '" . $opt['tex1_path'] . "';\n"; }
+			if(isset($opt['tex2_path']) && !empty($opt['tex2_path']) && file_exists($plugin_path . $opt['tex2_path'])){ $data .= "var tex2_path = '" . $opt['tex2_path'] . "';\n"; }
+			if(isset($opt['tex3_path']) && !empty($opt['tex3_path']) && file_exists($plugin_path . $opt['tex3_path'])){ $data .= "var tex3_path = '" . $opt['tex3_path'] . "';\n"; }
+			if(isset($opt['mot1_path']) && !empty($opt['mot1_path']) && file_exists($plugin_path . $opt['mot1_path'])){ $data .= "var mot1_path = '" . $opt['mot1_path'] . "';\n"; }
+			if(isset($opt['mot2_path']) && !empty($opt['mot2_path']) && file_exists($plugin_path . $opt['mot2_path'])){ $data .= "var mot2_path = '" . $opt['mot2_path'] . "';\n"; }
+			if(isset($opt['mot3_path']) && !empty($opt['mot3_path']) && file_exists($plugin_path . $opt['mot3_path'])){ $data .= "var mot3_path = '" . $opt['mot3_path'] . "';\n"; }
+			if(isset($opt['phy_path']) && !empty($opt['phy_path']) && file_exists($plugin_path . $opt['phy_path'])){ $data .= "var phy_path = '" . $opt['phy_path'] . "';\n"; }
+			$data .= "var attach_tag = '" . ((isset($opt['attach_tag']) && !empty($opt['attach_tag'])) ? $opt['attach_tag'] : ".entry-header") . "';\n"; 
+			$data .= "var pos_x = " . ((isset($opt['pos_x']) && !empty($opt['pos_x'])) ? $opt['pos_x'] : "0") . ";\n"; 
+			$data .= "var pos_y = " . ((isset($opt['pos_y']) && !empty($opt['pos_y'])) ? $opt['pos_y'] : "0") . ";\n"; 
+			$data .= "var scale = " . ((isset($opt['scale']) && !empty($opt['scale'])) ? $opt['scale'] : "100") . ";\n"; 
+
 			wp_enqueue_script('pixiWordPressPlugin', $plugin_url . 'js/pixiWordPressPlugin.js', '', '1.0', false);
+			wp_script_add_data('pixiWordPressPlugin', 'data', $data);
 
 		}else{
 			add_action('admin_menu', array($this, 'add_pages'));
 		}
-
-		//Set options
-		$opt = get_option('live2d_options');
-		$plugin_url = plugin_dir_url(__FILE__);
-		$plugin_path = plugin_dir_path(__FILE__);
-
-		print("<script>");
-		print("var theme_path = '" . $plugin_url . "';\n");
-		if(isset($opt['moc_path']) && !empty($opt['moc_path']) && file_exists($plugin_path . $opt['moc_path'])){ print("var moc_path = '" . $opt['moc_path'] . "';\n"); }
-		if(isset($opt['tex1_path']) && !empty($opt['tex1_path']) && file_exists($plugin_path . $opt['tex1_path'])){ print("var tex1_path = '" . $opt['tex1_path'] . "';\n"); }
-		if(isset($opt['tex2_path']) && !empty($opt['tex2_path']) && file_exists($plugin_path . $opt['tex2_path'])){ print("var tex2_path = '" . $opt['tex2_path'] . "';\n"); }
-		if(isset($opt['tex3_path']) && !empty($opt['tex3_path']) && file_exists($plugin_path . $opt['tex3_path'])){ print("var tex3_path = '" . $opt['tex3_path'] . "';\n"); }
-		if(isset($opt['mot1_path']) && !empty($opt['mot1_path']) && file_exists($plugin_path . $opt['mot1_path'])){ print("var mot1_path = '" . $opt['mot1_path'] . "';\n"); }
-		if(isset($opt['mot2_path']) && !empty($opt['mot2_path']) && file_exists($plugin_path . $opt['mot2_path'])){ print("var mot2_path = '" . $opt['mot2_path'] . "';\n"); }
-		if(isset($opt['mot3_path']) && !empty($opt['mot3_path']) && file_exists($plugin_path . $opt['mot3_path'])){ print("var mot3_path = '" . $opt['mot3_path'] . "';\n"); }
-		if(isset($opt['phy_path']) && !empty($opt['phy_path']) && file_exists($plugin_path . $opt['phy_path'])){ print("var phy_path = '" . $opt['phy_path'] . "';\n"); }
-		print("var attach_tag = '" . ((isset($opt['attach_tag']) && !empty($opt['attach_tag'])) ? $opt['attach_tag'] : ".entry-header") . "';\n"); 
-		print("var pos_x = " . ((isset($opt['pos_x']) && !empty($opt['pos_x'])) ? $opt['pos_x'] : "0") . ";\n"); 
-		print("var pos_y = " . ((isset($opt['pos_y']) && !empty($opt['pos_y'])) ? $opt['pos_y'] : "0") . ";\n"); 
-		print("var scale = " . ((isset($opt['scale']) && !empty($opt['scale'])) ? $opt['scale'] : "100") . ";\n"); 
-		print("</script>");
 	}
 
 	function add_pages(){
